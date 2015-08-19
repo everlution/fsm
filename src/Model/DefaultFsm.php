@@ -135,19 +135,27 @@ class DefaultFsm implements FsmInterface
         return true;
     }
 
-    public function doTransition(StatableInterface $object, $transitionName)
+    public function doTransition(StatableInterface $object, $transitionName, $throwException = true)
     {
         // find transition
         $transition = $this->getTransitionByName($transitionName);
 
         // check if from state is OK
         if ($object->getCurrentStateName() != $transition->getFromStateName()) {
-            throw new FsmException('The transition is invalid for the current state');
+            if ($throwException) {
+                throw new FsmException('The transition is invalid for the current state');
+            } else {
+                return false;
+            }
         }
 
         // check if all the grants are OK
         if (!$this->hasAllTransitionGrants($object, $transition)) {
-            throw new FsmException('The transition cannot be executed due to grants missing');
+            if ($throwException) {
+                throw new FsmException('The transition cannot be executed due to grants missing');
+            } else {
+                return false;
+            }
         }
 
         // execute transition
@@ -155,5 +163,7 @@ class DefaultFsm implements FsmInterface
 
         // remove all the current conditions
         $object->removeAllCurrentStateGrants();
+
+        return true;
     }
 }

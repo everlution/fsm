@@ -13,9 +13,23 @@ trait StatableTrait
         $this->currentStateGrants = array();
     }
 
+    public function setCurrentStateName($stateName)
+    {
+        $this->currentState = $stateName;
+
+        return $this;
+    }
+
+    public function getCurrentStateName()
+    {
+        return $this->currentState;
+    }
+
     public function addCurrentStateGrantName($grantName)
     {
-        $this->currentStateGrants[] = $grantName;
+        if (!in_array($grantName, $this->currentStateGrants)) {
+            $this->currentStateGrants[] = $grantName;
+        }
 
         return $this;
     }
@@ -25,21 +39,9 @@ trait StatableTrait
         return $this->currentStateGrants;
     }
 
-    public function getCurrentStateName()
-    {
-        return $this->currentState;
-    }
-
     public function removeAllCurrentStateGrants()
     {
         $this->currentStateGrants = array();
-
-        return $this;
-    }
-
-    public function setCurrentStateName($stateName)
-    {
-        $this->currentState = $stateName;
 
         return $this;
     }
