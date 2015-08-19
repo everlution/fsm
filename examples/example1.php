@@ -1,13 +1,18 @@
 <?php
 
-include 'MyObj.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Everlution\Fsm\Model\DefaultFsm;
-use AppBundle\Fsm\Model\State\InitialState;
-use AppBundle\Fsm\Model\State\FinalState;
+use Everlution\Fsm\Model\State\InitialState;
+use Everlution\Fsm\Model\State\FinalState;
 use Everlution\Fsm\Model\State;
 use Everlution\Fsm\Model\Transition;
 use Everlution\Fsm\Model\Grant;
+
+class MyObj implements \Everlution\Fsm\StatableInterface
+{
+    use \Everlution\Fsm\StatableTrait;
+}
 
 $fsm = new DefaultFsm();
 
@@ -42,8 +47,8 @@ $myObj = new MyObj();
 $fsm->setInitialState($myObj);
 
 $myObj
-    ->addCurrentGrantName('g1')
-    ->addCurrentGrantName('g2')
+    ->addCurrentStateGrantName('g1')
+    ->addCurrentStateGrantName('g2')
 ;
 
 $fsm->doTransition($myObj, 't2');

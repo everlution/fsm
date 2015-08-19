@@ -69,7 +69,7 @@ class DefaultFsm implements FsmInterface
             throw new FsmException('The FSM must specify one initial state');
         }
 
-        $object->setFsmState($initialState->getName());
+        $object->setCurrentStateName($initialState->getName());
     }
 
     public function isInInitialState(StatableInterface $object)
@@ -122,7 +122,7 @@ class DefaultFsm implements FsmInterface
 
     public function hasAllTransitionGrants(StatableInterface $object, Transition $transition)
     {
-        $currentGrantsNames = $object->getCurrentGrantsNames();
+        $currentGrantsNames = $object->getCurrentStateGrantsNames();
 
         $requiredGrants = $transition->getGrants();
 
@@ -154,6 +154,6 @@ class DefaultFsm implements FsmInterface
         $object->setCurrentStateName($transition->getToStateName());
 
         // remove all the current conditions
-        $object->removeAllCurrentGrants();
+        $object->removeAllCurrentStateGrants();
     }
 }
