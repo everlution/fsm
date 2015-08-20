@@ -23,7 +23,7 @@ class DefaultFsm implements FsmInterface
             throw new FsmException('The state must have a name');
         }
 
-        if ($state instanceof State\InitialState && $this->getInitialState()) {
+        if ($state instanceof InitialState && $this->getInitialState()) {
             throw new FsmException('Cannot add more than one initial state');
         }
 
@@ -54,7 +54,7 @@ class DefaultFsm implements FsmInterface
     public function getInitialState()
     {
         foreach ($this->states as $state) {
-            if ($state instanceof State\InitialState) {
+            if ($state instanceof InitialState) {
                 return $state;
             }
         }
@@ -81,7 +81,7 @@ class DefaultFsm implements FsmInterface
             null
         ;
 
-        return $state && $state instanceof State\InitialState;
+        return $state && $state instanceof InitialState;
     }
 
     public function isInFinalState(StatableInterface $object)
@@ -93,7 +93,7 @@ class DefaultFsm implements FsmInterface
             null
         ;
 
-        return $state && $state instanceof State\FinalState;
+        return $state && $state instanceof FinalState;
     }
 
     /**

@@ -3,8 +3,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Everlution\Fsm\Model\DefaultFsm;
-use Everlution\Fsm\Model\State\InitialState;
-use Everlution\Fsm\Model\State\FinalState;
+use Everlution\Fsm\Model\InitialState;
+use Everlution\Fsm\Model\FinalState;
 use Everlution\Fsm\Model\State;
 use Everlution\Fsm\Model\Transition;
 use Everlution\Fsm\Model\Grant;
