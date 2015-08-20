@@ -19,7 +19,7 @@ class DefaultFsm implements FsmInterface
 
     public function addState(State $state)
     {
-        if (!$state->getName()) {
+        if ($state->getName() === null) {
             throw new FsmException('The state must have a name');
         }
 
@@ -34,7 +34,7 @@ class DefaultFsm implements FsmInterface
 
     public function addTransition(Transition $transition)
     {
-        if (!$transition->getName()) {
+        if ($transition->getName() === null) {
             throw new FsmException('The transition must have a name');
         }
 
