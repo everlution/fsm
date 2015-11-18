@@ -143,7 +143,13 @@ class DefaultFsm implements FsmInterface
         // check if from state is OK
         if ($object->getCurrentStateName() != $transition->getFromStateName()) {
             if ($throwException) {
-                throw new FsmException('The transition is invalid for the current state');
+                throw new FsmException(sprintf(
+                    'Transition<%s> from state<%s> to state<%s> is invalid for the current state<%s>',
+                    $transition->getName(),
+                    $transition->getFromStateName(),
+                    $transition->getToStateName(),
+                    $object->getCurrentStateName()
+                ));
             } else {
                 return false;
             }
