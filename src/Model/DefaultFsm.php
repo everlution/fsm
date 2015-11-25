@@ -32,6 +32,14 @@ class DefaultFsm implements FsmInterface
         return $this;
     }
 
+    /**
+     * @return \Everlution\Fsm\Model\State[]
+     */
+    public function getStates()
+    {
+        return $this->states;
+    }
+
     public function addTransition(Transition $transition)
     {
         if ($transition->getName() === null) {
@@ -49,6 +57,14 @@ class DefaultFsm implements FsmInterface
         $this->transitions[$transition->getName()] = $transition;
 
         return $this;
+    }
+
+    /**
+     * @return \Everlution\Fsm\Model\Transition[]
+     */
+    public function getTransitions()
+    {
+        return $this->transitions;
     }
 
     public function getInitialState()
@@ -98,7 +114,7 @@ class DefaultFsm implements FsmInterface
 
     /**
      * @param string $stateName
-     * @return \AppBundle\Fsm\Model\State
+     * @return \Everlution\Fsm\Model\State
      */
     public function getStateByName($stateName)
     {
@@ -110,7 +126,7 @@ class DefaultFsm implements FsmInterface
 
     /**
      * @param string $transitionName
-     * @return \AppBundle\Fsm\Model\Transition
+     * @return \Everlution\Fsm\Model\Transition
      */
     public function getTransitionByName($transitionName)
     {
