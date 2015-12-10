@@ -25,6 +25,11 @@ trait StatableTrait
         return $this->currentState;
     }
 
+    public function isInState($stateName)
+    {
+        return $this->currentState == $stateName;
+    }
+
     public function addCurrentStateGrantName($grantName)
     {
         if (!in_array($grantName, $this->currentStateGrants)) {

@@ -8,6 +8,8 @@ interface StatableInterface
 
     public function getCurrentStateName();
 
+    public function isInState($stateName);
+
     public function addCurrentStateGrantName($grantName);
 
     public function getCurrentStateGrantsNames();
