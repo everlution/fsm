@@ -12,11 +12,14 @@ class Transition
 
     private $grants;
 
-    public function __construct($name, $fromStateName, $toStateName)
+    private $description;
+
+    public function __construct($name, $fromStateName, $toStateName, $description = null)
     {
         $this->name = $name;
         $this->fromStateName = $fromStateName;
         $this->toStateName = $toStateName;
+        $this->description = $description;
         $this->grants = array();
     }
 
@@ -66,5 +69,17 @@ class Transition
     public function getGrants()
     {
         return $this->grants;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
