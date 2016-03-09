@@ -2,16 +2,19 @@
 
 namespace Everlution\Fsm\Model;
 
-class State
+use Everlution\Fsm\Model\Interfaces\TaggableInterface;
+use Everlution\Fsm\Model\Traits\TaggableTrait;
+
+class State implements TaggableInterface
 {
+    use TaggableTrait;
+
     private $name;
 
-    private $description;
-
-    public function __construct($name, $description = null)
+    public function __construct($name, array $tags = array())
     {
         $this->name = $name;
-        $this->description = $description;
+        $this->tags = $tags;
     }
 
     public function setName($name)
@@ -24,17 +27,5 @@ class State
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
     }
 }

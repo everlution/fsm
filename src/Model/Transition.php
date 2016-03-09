@@ -2,8 +2,13 @@
 
 namespace Everlution\Fsm\Model;
 
-class Transition
+use Everlution\Fsm\Model\Interfaces\TaggableInterface;
+use Everlution\Fsm\Model\Traits\TaggableTrait;
+
+class Transition implements TaggableInterface
 {
+    use TaggableTrait;
+
     private $name;
 
     private $fromStateName;
@@ -12,14 +17,12 @@ class Transition
 
     private $grants;
 
-    private $description;
-
-    public function __construct($name, $fromStateName, $toStateName, $description = null)
+    public function __construct($name, $fromStateName, $toStateName, array $tags = array())
     {
         $this->name = $name;
         $this->fromStateName = $fromStateName;
         $this->toStateName = $toStateName;
-        $this->description = $description;
+        $this->tags = $tags;
         $this->grants = array();
     }
 
@@ -69,17 +72,5 @@ class Transition
     public function getGrants()
     {
         return $this->grants;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
     }
 }
