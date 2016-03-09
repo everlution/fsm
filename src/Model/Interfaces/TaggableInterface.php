@@ -9,4 +9,6 @@ interface TaggableInterface
     public function setTags(array $tags);
 
     public function getTags();
+
+    public function getTag($name, $default = null);
 }

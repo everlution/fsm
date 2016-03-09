@@ -24,4 +24,9 @@ trait TaggableTrait
     {
         return $this->tags;
     }
+
+    public function getTag($name, $default = null)
+    {
+        return isset($this->tags[$name]) ? $this->tags[$name] : $default;
+    }
 }
