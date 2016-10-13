@@ -211,4 +211,21 @@ class DefaultFsm implements FsmInterface
 
         return $nextStates;
     }
+
+    /**
+     * @param $state
+     * @return Transition[]
+     */
+    public function getAvailableTransitions($state)
+    {
+        $transitions = array();
+
+        foreach ($this->transitions as $transition) {
+            if ($transition->getFromStateName() == $state) {
+                $transitions[] = $transition;
+            }
+        }
+
+        return $transitions;
+    }
 }
