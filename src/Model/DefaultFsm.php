@@ -7,8 +7,14 @@ use Everlution\Fsm\Exception\FsmException;
 
 class DefaultFsm implements FsmInterface
 {
+    /**
+     * @var string[]
+     */
     private $states;
 
+    /**
+     * @var Transition[]
+     */
     private $transitions;
 
     public function __construct()
@@ -187,5 +193,22 @@ class DefaultFsm implements FsmInterface
         $object->removeAllCurrentStateGrants();
 
         return true;
+    }
+
+    /**
+     * @param $state
+     * @return string[]
+     */
+    public function getNextAvailableStates($state)
+    {
+        $nextStates = array();
+
+        foreach ($this->transitions as $transition) {
+            if ($transition->getFromStateName() == $state) {
+                $nextStates[] = $transition->getToStateName();
+            }
+        }
+
+        return $nextStates;
     }
 }
