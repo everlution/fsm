@@ -244,18 +244,6 @@ class DefaultFsm implements FsmInterface
         return $transitions;
     }
 
-    public function getFinalStates()
-    {
-        $finalStates = array();
-        foreach ($this->states as $state) {
-            if ($state instanceof FinalState) {
-                $finalStates[] = $state;
-            }
-        }
-
-        return $finalStates;
-    }
-
     public function getFinalStatesNames()
     {
         $finalStates = array();
