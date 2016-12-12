@@ -83,6 +83,19 @@ class DefaultFsm implements FsmInterface
         return false;
     }
 
+    public function getFinalStates()
+    {
+        $finalStates = [];
+
+        foreach ($this->states as $state) {
+            if ($state instanceof FinalState) {
+                $finalStates[] = $state;
+            }
+        }
+
+        return $finalStates;
+    }
+
     public function setInitialState(StatableInterface $object)
     {
         $initialState = $this->getInitialState();
@@ -92,6 +105,8 @@ class DefaultFsm implements FsmInterface
         }
 
         $object->setCurrentStateName($initialState->getName());
+
+        return $this;
     }
 
     public function isInInitialState(StatableInterface $object)
