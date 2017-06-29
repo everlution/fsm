@@ -96,6 +96,18 @@ class DefaultFsm implements FsmInterface
         return $finalStates;
     }
 
+    public function getNonFinalStates()
+    {
+        $nonFinalStates = array();
+        foreach ($this->states as $state) {
+            if (!$state instanceof FinalState) {
+                $nonFinalStates[] = $state;
+            }
+        }
+
+        return $nonFinalStates;
+    }
+
     public function setInitialState(StatableInterface $object)
     {
         $initialState = $this->getInitialState();
@@ -228,6 +240,31 @@ class DefaultFsm implements FsmInterface
     }
 
     /**
+     * @param string $state
+     * @param bool $includeGivenState
+     *
+     * @return array
+     */
+    public function getAllStateNamesPastTheGivenState($state, $includeGivenState = true)
+    {
+        $nextStates = $includeGivenState ? [$state] : [];
+
+        $fetchNextStates = function($state) use (&$nextStates, &$fetchNextStates) {
+            foreach ($this->getNextAvailableStates($state) as $nextAvailableState) {
+                if (in_array($nextAvailableState, $nextStates)) {
+                    continue;
+                }
+                $nextStates[] = $nextAvailableState;
+                $fetchNextStates($nextAvailableState);
+            }
+        };
+
+        $fetchNextStates($state);
+
+        return $nextStates;
+    }
+
+    /**
      * @param $state
      * @return Transition[]
      */
@@ -246,37 +283,18 @@ class DefaultFsm implements FsmInterface
 
     public function getFinalStatesNames()
     {
-        $finalStates = array();
-        foreach ($this->states as $state) {
-            if ($state instanceof FinalState) {
-                $finalStates[] = $state->getName();
-            }
-        }
-
-        return $finalStates;
-    }
-
-    public function getNonFinalStates()
-    {
-        $nonFinalStates = array();
-        foreach ($this->states as $state) {
-            if (!$state instanceof FinalState) {
-                $nonFinalStates[] = $state;
-            }
-        }
-
-        return $nonFinalStates;
+        return $this->getNamesFromStates($this->getFinalStates());
     }
 
     public function getNonFinalStatesNames()
     {
-        $nonFinalStates = array();
-        foreach ($this->states as $state) {
-            if (!$state instanceof FinalState) {
-                $nonFinalStates[] = $state->getName();
-            }
-        }
+        return $this->getNamesFromStates($this->getNonFinalStates());
+    }
 
-        return $nonFinalStates;
+    public function getNamesFromStates(array $states)
+    {
+        return array_map(function(State $state) {
+            return $state->getName();
+        }, $states);
     }
 }
